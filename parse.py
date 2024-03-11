@@ -2,10 +2,12 @@ import ast
 import os
 import json
 import sys
-from cla import db
+# from cla import db
 sys.path
-sys.path.append('/Users/weishiding/Desktop/Capstone/Spring/llmyacc/llmyacc_supplemental/sample_flask_web_app/flaskr/')
-root_path = "/Users/weishiding/Desktop/Capstone/Spring/llmyacc/llmyacc_supplemental/sample_flask_web_app/flaskr/"
+# sys.path.append('/Users/weishiding/Desktop/Capstone/Spring/llmyacc/llmyacc_supplemental/sample_flask_web_app/flaskr/')
+sys.path.append('/Users/weishiding/Desktop/prev/cs138/project138/')
+# root_path = "/Users/weishiding/Desktop/Capstone/Spring/llmyacc/llmyacc_supplemental/sample_flask_web_app/flaskr/"
+
 class CallGraphBuilder(ast.NodeVisitor):
     
     def __init__(self):
@@ -108,45 +110,42 @@ def generate_call_graph(file_path):
     builder.visit(tree)
     return builder.call_graph
 
-# Example usage
-file_path_flaskr_app = "/Users/weishiding/Desktop/Capstone/Spring/llmyacc/llmyacc_supplemental/sample_flask_web_app/flaskr/app.py"
-file_path_flaskr_models = "/Users/weishiding/Desktop/Capstone/Spring/llmyacc/llmyacc_supplemental/sample_flask_web_app/flaskr/models.py"
 
 
+def all():
+    ################## List to store the paths of .py files
+    python_files = []
+    root_path = "/Users/weishiding/Desktop/prev/cs138/project138/"
+    # Walk through specified directory
+    for root, dirs, files in os.walk(root_path):
+        for file in files:
+            # Check if the file ends with .py
+            if file.endswith('.py') and not file.startswith('.') and '-checkpoint' not in file:
+                # Split the file name and the extension
+                file_name_without_extension, _ = os.path.splitext(file)
+                # Append the full path to the list
+                python_files.append(file_name_without_extension)
 
-directory_to_walk = '/Users/weishiding/Desktop/Capstone/Spring/llmyacc/llmyacc_supplemental/sample_flask_web_app/flaskr'
+    # Printing all .py files found
+    # for file in python_files:
+    #     print(file)
+    # print(python_files)
+    ################ generate call graph
+    # file_path = "example.py" 
+    for file_name in python_files:
+        with open(file_name + '.json', 'w') as file:
+            # Write the dictionary to the file in JSON format
+            
+            # print(file_name + ".py")
+            call_graph = generate_call_graph(root_path + file_name + ".py")
+            imports = call_graph['imports']
+            clean_imports = list(set(python_files).intersection(set(imports)))
+            # print(clean_imports)
+            call_graph['imports'] = clean_imports
+            json.dump(call_graph, file)
 
-################## List to store the paths of .py files
-python_files = []
+            # print(call_graph)
+    return python_files
 
-# Walk through specified directory
-for root, dirs, files in os.walk(directory_to_walk):
-    for file in files:
-        # Check if the file ends with .py
-        if file.endswith('.py'):
-            # Split the file name and the extension
-            file_name_without_extension, _ = os.path.splitext(file)
-            # Append the full path to the list
-            python_files.append(file_name_without_extension)
-
-# Printing all .py files found
-for file in python_files:
-    print(file)
-    
-
-
-################# generate call graph
-#file_path = "example.py" 
-for file_name in python_files:
-    with open(file_name + '.json', 'w') as file:
-        # Write the dictionary to the file in JSON format
-        
-        #print(file_name + ".py")
-        call_graph = generate_call_graph(root_path + file_name + ".py")
-        imports = call_graph['imports']
-        clean_imports = list(set(python_files).intersection(set(imports)))
-        print(clean_imports)
-        call_graph['imports'] = clean_imports
-        json.dump(call_graph, file)
-
-        # print(call_graph)
+if __name__ == "__main__":
+    all()
