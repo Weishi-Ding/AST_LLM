@@ -1,7 +1,13 @@
+'''
+This program is used to show the 
+'''
+
 import ast
 import os
 import json
 import sys
+from git_repo_relation import generate_structure_json
+from git_repo_relation import getGitSourceCode
 # from cla import db
 sys.path
 # sys.path.append('/Users/weishiding/Desktop/Capstone/Spring/llmyacc/llmyacc_supplemental/sample_flask_web_app/flaskr/')
@@ -101,23 +107,56 @@ class CallGraphBuilder(ast.NodeVisitor):
                 #         self.call_graph["classes"][class_name]["instances"].add(instance_name)
         self.generic_visit(node)
 
+def generate_call_graph_git_code(source_code):  
+    tree = ast.parse(source_code)
+    builder = CallGraphBuilder()
+    builder.visit(tree)
+    return builder.call_graph
+
 def generate_call_graph(file_path):
     with open(file_path, "r") as source_file:
         source_code = source_file.read()
-    
     tree = ast.parse(source_code)
     builder = CallGraphBuilder()
     builder.visit(tree)
     return builder.call_graph
 
 
+def collect_python_imports(source_code_dict, import_relation_dict):
+    '''
+    @source_code_dict: {"file_name_with_folder_info" : "source_code"}
+    ----------------------------------------------------------------------------
+    return value
+    @file_imports: {"fileName":[number_of_imports, list_of_import_name, file_index]}
+    '''
+    python_files = list(source_code_dict.keys()) 
+    python_files_without_folder = [path.split('/')[-1].replace('.py', '') for path in python_files]
+    
+    for idx, file_name in enumerate(python_files):
+        # with open(file_name + '_git_.json', 'w') as file:
+        source_code = source_code_dict[file_name]
+        call_graph = generate_call_graph_git_code(source_code)
+        imports = call_graph['imports']
+        # print(imports)
+        clean_imports = list(set(python_files_without_folder).intersection(set(imports)))
+        import_relation_dict[file_name] = [len(clean_imports), clean_imports, idx] 
+    return import_relation_dict
+        
+    
+def all_github(url):
+    print("entering all_github function \n")
+    _, source_code_dict = generate_structure_json(url)
+    import_relation_dict = {}
+    collect_python_imports(source_code_dict, import_relation_dict)
+    print("leaving all_github function \n")
+    return (source_code_dict, import_relation_dict)
 
 def all():
     ################## List to store the paths of .py files
     python_files = []
     root_path = "/Users/weishiding/Desktop/prev/cs138/project138/"
     # Walk through specified directory
-    for root, dirs, files in os.walk(root_path):
+    for root, dirs, files in os.walk(root_path): 
         for file in files:
             # Check if the file ends with .py
             if file.endswith('.py') and not file.startswith('.') and '-checkpoint' not in file:
@@ -140,12 +179,17 @@ def all():
             call_graph = generate_call_graph(root_path + file_name + ".py")
             imports = call_graph['imports']
             clean_imports = list(set(python_files).intersection(set(imports)))
-            # print(clean_imports)
+            print(clean_imports)
             call_graph['imports'] = clean_imports
             json.dump(call_graph, file)
-
+            # print("----cur file is " + file_name + "----\n")
             # print(call_graph)
+            # print("----end of file " + file_name + "----\n")
+    # print(python_files)
     return python_files
 
 if __name__ == "__main__":
-    all()
+    pass
+    # all()
+    source_code_dic, _ = all_github("https://api.github.com/repos/Weishi-Ding/AST_LLM/contents/")
+    # print(source_code_dic)

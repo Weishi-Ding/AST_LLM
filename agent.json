@@ -1,1 +1,1 @@
-{"imports": ["DQN", "utils"]}
+{"imports": ["utils", "DQN"]}

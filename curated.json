@@ -1,31 +1,13 @@
 {
-    "domains": [
-      {
-        "name": "machine learning",
-        "subDomains": [
-          {
-            "name": "reinforcement learning",
-            "tags": [
-              "Q Learning",
-              "SARSA (State-Action-Reward-State-Action) algorithm",
-              "Temporal difference learning"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "supervised learning",
-        "tags": [
-          "Linear Regression",
-          "Ordinary Least Squares",
-          "Logistic Regression",
-          "Softmax Regression",
-          "Classification",
-          "k-nearest neighbor",
-          "Support Vector Machines",
-          "Random Forest"
-        ]
-      }
-    ]
-  }
-  
+  "hard skills": [
+      {"Tag name" : "file name | function name"}
+  ],
+
+  "soft skills": [
+      {"Tag name" : "file name | function name"}
+  ],
+
+  "domains": [
+      {"Tag name" : "file name | function name"}
+  ]
+}

@@ -1,0 +1,364 @@
+entering all_github function 
+
+https://api.github.com/repos/Weishi-Ding/AST_LLM/contents/
+https://api.github.com/repos/Weishi-Ding/AST_LLM/contents/sample_repo/
+https://api.github.com/repos/Weishi-Ding/AST_LLM/contents/sample_repo/data_processing/
+leaving all_github function 
+
+current file we are looking at is sample_repo/utils.py 
+
+- - - - - - - - - - - - - - - - - - Specific Code Summary - - - - - - - - - - - - - - - - - -
+
+**a) Code File Overview**
+
+This Python code file is primarily dedicated to implementing several utility functions that enable the conversion of numpy arrays into PyTorch tensors, the extraction of tensors from a batch of experiences, and retrieving current and target Q values in the context of a Q-Learning model. The code also includes a function to adjust the format of a date string. Libraries imported include torch and its submodules, numpy, pandas, matplotlib, and collections.
+
+**b) Function Documentation**
+
+1. **ndarray_to_tensor(array, batch_size, num_features)**: This utility function converts a numpy array into a PyTorch tensor with a given batch size and a number of features per example.
+
+2. **oneDarray_to_tensor(array, batch_size)**: This utility function converts a one-dimensional numpy array into a PyTorch tensor with a given batch size.
+
+3. **extract_tensors(experiences, batch_size, num_features)**: This function takes in a batch of experiences, each consisting of 'state', 'action', 'reward', and 'next state', and outputs corresponding tensors named t1, t2, t3, and t4.
+
+4. **get_cur_Qs(policy_net, states, actions)**: This function computes the current Q values for a given set of states and actions using a policy network model.
+
+5. **get_target_Qs(target_net, next_states)**: The function computes the target Q values for a given set of states using a target network model.
+
+6. **adjust_date_format(date_str)**: This function converts a date string in the format 'YYYYMMDD' to 'YYYY-MM-DD'.
+
+**c) Additional Insights**
+
+This code file appears to be part of a larger system, likely dealing with reinforcement learning (evident from the Q value computation functions) and data manipulation (as indicated by tensor and date format conversion functions). The functions seem to be designed to interface with a PyTorch model. Notably, some import statements for utils seems to be commented out. It may be for implementation in the future. 
+
+- - - - - - - - - - - - - - - - - - Running Summary for the Code - - - - - - - - - - - - - - - - - -
+
+The file analysed in this step primarily provides utility functions for tensor data manipulation, data extraction, Q-Value computations in reinforcement learning, and date format adjustment. More specifically, these functions convert numpy data into PyTorch tensors, extract tensors from experiences, compute current and target Q-values, and adjust the format of date strings.
+
+When dealing with subsequent files in this repository, I anticipate finding more code files focused on implementing critical functions of a reinforcement learning system. The existence of policy and target networks deduced from this file, indicate the probable design of a Deep Q-Learning model. Therefore, I would anticipate seeing more code related to the core implementation of the learning agent, with sophisticated utilities for data manipulation and model interaction already laid out. 
+
+Going forward, the functions in this file will provide critical utility operations, with other files potentially building on or leveraging these for more complex tasks. The overall structure and purposes of the repository will become more apparent as more code files are analysed.
+current file we are looking at is sample_repo/DQN.py 
+
+**Step 1: Analyze the Current Code File**
+
+``` - - - - - - - - - - - - - - - - - - Specific Code Summary - - - - - - - - - - - - - - - - - -
+
+**a) Code File Overview**
+
+This Python code file expands upon the previous file by implementing a Deep Q-Network (DQN), which is a type of neural network used in Reinforcement Learning, and an Experience_Buffer class for storing and sampling experiences. It also imports several utilities documented in the previous code file.
+
+**b) Function Documentation**
+
+*Class Documentation:*
+
+1. **DQN(nn.Module)**: This class is a subclass of the PyTorch's nn.Module class and constructs a Deep Q-Network (DQN). The class contains two primary methods:
+
+    * **__init__(self, input_dim, output_dim)**: This method initializes the DQN with input and output dimensions. It also constructs a three-layer neural network model inside the DQN, using PyTorch's Sequential container which consists of two fully connected layers with ReLU activation.
+
+    * **forward(self, x)**: This method defines the forward pass for the DQN. When given an input tensor 'x', it runs 'x' through the model and returns the output.
+
+2. **Experience_Buffer()**: This class implements a buffer to store and manage experiences. It includes key methods as follows:
+
+    * **__init__(self, buffer_cap=1000)**: This method initializes the Experience_Buffer with an empty list and a buffer_capacity parameter that defaults to 1000 if not specified.
+
+    * **add(self, experience : Experience)**: This method adds a new 'Experience' object to the buffer. If the buffer is at capacity, it will remove the oldest experience before adding the new one.
+
+    * **sample(self, batch_size)**: This method returns a random sample of 'batch_size' number of experiences from the buffer. The buffer items are shuffled before the sampling to ensure randomness.
+
+    * **can_provide_sample(self, batch_size)**: This method checks if the buffer contains at least 'batch_size' number of experiences. If the condition is true, it means the buffer is ready to provide a sample.
+
+**c) Additional Insights**
+
+This file solidifies the hypothesis indicated in the running summary, which is the broader objective of building reinforcement learning systems, specifically using the Q-Learning model. There are implementations of DQN and Experience Buffer, which are critical components of the Deep Q-Learning model. Additionally, functions from the previous code file are imported showing integration within the codebase.
+```
+
+**Step 2: Integrate Your Analysis into the Running Summary**
+
+``` - - - - - - - - - - - - - - - - - - Running Summary for the Code - - - - - - - - - - - - - - - - - -
+
+The process of examining this Python codebase further reveals key elements of the project. The latest file analysed implements a Deep Q-Network and an Experience Buffer, strengthening the understanding of the purpose of the project: to develop a system using Deep Q-Learning approach.
+
+Key functions (DQN and Experience_Buffer) were identified and analyzed in the current code file. The DQN is a neural network that will likely act as the brains of the operation, determining the best actions by anticipating their likely outcomes. In contrast, the Experience_Buffer is a crucial part of the system that will store experiences for training the neural network with a method called Experience Replay in reinforcement learning.
+
+An important aspect noted from the code file is the connectivity and usage of functions from the previously analysed file. This correlation strengthens the understanding of the relationships within the codebase.
+
+Having studied two code files now, we can see the unfolding of a larger reinforcement learning system. The utilities and foundation set in the initial code file have been extended with the DQN and Experience Buffer. As new code files are examined, it is expected to further discover the remaining integral pieces of the model, like the learning agent and the implementation details of training and exploring, thereby providing a comprehensive understanding of the entire project.
+current file we are looking at is sample_repo/data_processing/backtest.py 
+
+**Step 1: Analyze the Current Code File**
+
+- - - - - - - - - - - - - - - - - - Specific Code Summary - - - - - - - - - - - - - - - - - -
+
+**a) Code File Overview**
+
+This Python code file introduces the 'Backtest' class, which appears to serve the primary purpose of conducting a backtest simulation of a trading strategy based on a reinforcement learning model. The backtest class evaluates the performance of an agent over time in a specified market environment, and provides an analysis of various performance metrics. The code incorporates an agent, which represents the learning model, and an environment for testing, indicating the code's role in simulating and validating the efficacy of the model's trading strategies.
+
+**b) Function Documentation**
+
+*Class Documentation:*
+
+1. **Backtest**: A class that represents a simulation of a backtest on a reinforcement learning agent's trading strategy. It takes the initial money, agent and test environment as input. The class calculates and stores multiple performance metrics such as total returns, annual return, benchmark returns, information ratio, beta, alpha, and sharpe ratio for evaluation of the trading strategy.
+
+   Its main methods include:
+
+    * **execute(self)**: Runs the backtest by taking actions from the policy network, updating the state, and calculating the returns. 
+
+    * **cal_total_return(self)**, **cal_annualized_return(self)**, **cal_benchmark(self)**, **cal_information_ratio(self)**, **cal_beta(self)**, **cal_alpha(self)**, **cal_sharpe_ratio(self)**, **cal_win_rate(self)**, **cal_profit_loss_ratio(self)**, **cal_return_volatility(self)**, **calculate_max_drawdown(self)**: Various individual methods for calculating specific performance metrics.
+
+    * **evaluate(self)**: Calls all the individual methods for calculating performance metrics and returns a comprehensive array of the metrics.
+
+    * **show_result(self)**: Displays a visual representation of the backtest results, including strategy performance and comparison with a benchmark.
+
+**c) Additional Insights**
+
+In addition to the reinforcement learning aspect, this code file brings in a finance layer - stock market backtesting. The Backtest class seems to pull stock data, perform trades using a reinforcement learning agent, and provide an extensive evaluation of the agent's performance. This enhances our understanding of the codebase's context, showing its direct application to financial trading. The code file makes use of the 'tushare' library for financial data, the 'torch' library for machine learning capabilities, and 'plotly' for data visualization.
+
+- - - - - - - - - - - - - - - - - 
+
+**Step 2: Integrate Your Analysis into the Running Summary**
+
+- - - - - - - - - - - - - - - - - - Running Summary for the Code - - - - - - - - - - - - - - - - - - -
+
+The previous Python codebases reviewed played a part in building a reinforcement learning system. The latest code file presents the application of the system - stock market backtesting. This code file defines a Backtest class that performs trades using a reinforcement learning agent in a test financial market environment and evaluates the performance.
+
+The Backtest class demonstrates how the agent, built using the DQN and Experience_Buffer classes, interacts with a simulated financial market environment. It evaluates the agent's ability to trade stocks over time, recording numerous key performance metrics. The class features various methods for calculating performance metrics like total returns, Sharpe ratio, beta, alpha, and more. The metrics collectively contribute to a comprehensive evaluation of the trading strategy implemented by the reinforcement learning agent. 
+
+The code file also includes a visual representation of the backtest results, involving the comparison of the agent's performance with a benchmark. This demonstrates the codebase's emphasis on readability and data visualization, enabling users to understand and interpret the performance of their reinforcement learning trading strategies easily. 
+
+Incorporating this analysis into the running summary, the Python project seems to be building a sophisticated reinforcement learning trading system, given the DQN class for modeling the agent's 'brain' and the Experience_Buffer class for memory, and now the Backtest class for simulation and performance evaluation. Further exploration of the remaining code files would likely provide a more detailed picture of the reinforcement learning system's functioning in a financial trading context.
+current file we are looking at is sample_repo/data_processing/data_process.py 
+
+**Step 1: Analyze the Current Code File**
+
+- - - - - - - - - - - - - - - - - - Specific Code Summary - - - - - - - - - - - - - - - - - -
+
+**a) Code File Overview**
+
+The current Python code file primarily comprises of several data processing functions that manipulate and prepare financial data for further use. The file focuses on performing operations on pandas dataframes representing stock price data. The operations include normalization, dropping null data, and percentage change clipping. The prepared data is likely to be used later in the project, presumably serving as input for the trading strategy.
+
+**b) Function Documentation**
+
+This code file contains the following functions:
+
+1. **normalize_column(column)**: This function normalizes a pandas series. It subtracts the minimum value from each value and divides it by the range of the series (the maximum value minus the minimum value).
+
+2. **add_avg(df)**: This function adds a rolling average of the 'close' prices to the dataframe for a window of 5 days. It drops the null data rows from the input dataframe df and returns the processed dataframe.
+
+3. **process_data(df, test=False)**: The main data processing function engages in multiple operations on the input dataframe df: dropping null data, resetting the index, clipping 'pct_change' between -10 and 10 (only for non-test data), normalizing the remaining columns group by 'ts_code', and dropping any null data that may have resulted from the operations.
+
+**c) Additional Insights**
+
+These data preprocessing steps appear essential in shaping the raw financial data into a form that can be used for running the backtest simulation and training the learning agent. They ensure that the data fed into the model is clean, appropriately scaled, and structured for optimal learning performance by the agent. The code file calls upon libraries such as 'numpy', 'pandas', 'torch' and 'matplotlib.pyplot', hinting at data manipulation, model training, and visualization operations in the larger project.
+
+- - - - - - - - - - - - - - - - - 
+
+**Step 2: Integrate Your Analysis into the Running Summary**
+
+- - - - - - - - - - - - - - - - - - Running Summary for the Code - - - - - - - - - - - - - - - - - - -
+
+The Python project seems to be building a comprehensive reinforcement learning trading system, with the latest focus on data preprocessing for stock price data. This enriches our understanding of the project as it indicates an element of real-world data manipulation and transformation, a key stage in ML projects, particularly in the financial trading domain.
+
+Previous analyses of the codebase outlined several building blocks of a reinforcement learning system: the 'DQN' class as the learning model, the 'Experience_Buffer' class for managing agent's experiences, and 'Backtest' class for simulating and assessing the agent's trading strategy in a test environment. This newly reviewed code file contributes the data processing component critical to the trading context. 
+
+It contains functions to normalize and clean stock price data and calculate percentage change, facilitating the agent's interaction with real-world, complex data. This suggests the trading system in-development doesn't just build and evaluate models but involves a step to tailor real stock data for optimal system performance. 
+
+As more code files are reviewed, we expect to discover more about data ingestion, learning model updates, and performance optimization, weaving a detailed picture of a Python-based reinforcement learning trading system.
+current file we are looking at is sample_repo/env.py 
+
+**Step 1: Analyze the Current Code File**
+
+- - - - - - - - - - - - - - - - - - Specific Code Summary - - - - - - - - - - - - - - - - - - 
+
+**a) Code File Overview**
+
+This Python code file encapsulates a critical component in reinforcement learning: the Environment. The Environment class represents the context within which the agent interacts. Here, this environment enables the agent to interact with stock trading data. The Environment class allows the agent to explore the portfolio of a random stock from a provided list and interact via different actions (presumably holding, buying, or selling stock).
+
+**b) Function Documentation**
+
+This file primarily contains the following methods within the Environment class:
+
+1. **__init__(df)**: This initializes an instance of the Environment class. It takes a single argument, a pandas dataframe `df` which contains data for multiple stocks. It initializes variables that define the list of available stocks, the current stock, the stock's dataframe, and the current timestep.
+
+2. **reset()**: This method resets the environment for the start of a new episode. It randomly selects a new stock from the available list, prepares the data for that stock by sorting and resetting the index. Finally, it returns initial state by removing 'trade_date' and 'pct_change' columns. This state will presumably be passed to the model for further action.
+
+3. **step(action, portfolio)**: This method allows the agent to interact with the environment. The agent initiates an action (presumably either holding, buying, or selling stocks), and the environment responds with the resultant new portfolio and a reward for taking that action.
+
+**c) Additional Insights**
+
+This file follows the Environment-Agent-Action model standard in reinforcement learning applications. It gives your trading agent a field to practice and perform different actions. It bridles the agent's interactions by guiding it through different states (time steps) in each simulation (or 'episode') and determines the reward earned from each action. 
+
+- - - - - - - - - - - - - - - - - 
+
+**Step 2: Integrate Your Analysis into the Running Summary**
+
+- - - - - - - - - - - - - - - - - - Running Summary for the Code - - - - - - - - - - - - - - - - - - 
+
+In our previously analyzed code, we established that this project is aiming to build a comprehensive reinforcement learning-based trading system. On the journey, we found pieces like data preprocessing functions and several reinforcement learning components.
+
+The newly reviewed code file adds to our understanding by introducing the Environment within which the agent operates—an essential module for all reinforcement learning systems. Environment, in this case, is providing the concept of episodes (giving the agent the feel of trading different stocks independently), a state-transition mechanism (moving the agent through time steps), and a reward scheme for the agent's actions. This outlines the major interaction mechanism of the agent, giving clear insights into how the agent will train and learn.
+
+The Environment's 'step' function formulates how the agent's actions (buying, holding, selling stocks) influence its portfolio and the reward. This builds over the data preprocessing functions we discovered, adding real-world responsiveness to the project. Simultaneously, the 'reset' function allows the agent to start fresh, ensuring its learning doesn't retain residuals from previous simulations or 'episodes'.
+
+Therefore, we can safely deduce that the project has so far set up a well-structured reinforcement learning pipeline. It involves data collection and preparation, an agent-environment interaction model, and a reward function to guide learning. As the insights from different pieces cement together, the overarching picture of the Python-based reinforcement learning trading system becomes clearer. Future analysis of yet unexplored code files will likely shed more light on the learning model's architecture and performance improvement approaches.
+current file we are looking at is sample_repo/agent.py 
+
+**Step 1: Analyze the Current Code File**
+
+- - - - - - - - - - - - - - - - - - Specific Code Summary - - - - - - - - - - - - - - - - - -
+
+**a) Code File Overview**
+
+This Python code file defines the Agent in the reinforcement learning system. The agent is crucial to the system as it decides what action to take at each state, iteratively learning based on the actions' outcomes visible through the feedback (reward) received from the environment (previously reviewed in code files). The Agent is configured with 'policy_net' and 'target_net', both of which are instances of a Deep Q-Network (DQN). The agent interacts with the environment, stores the experiences, and then conducts learning by comparing predicted and target Q-values.
+
+**b) Function Documentation**
+
+The file contains one main Agent class with the following essential methods:
+
+1. **__init__(model)**: Initializes the agent with input dimensions, output dimensions, and an action space. If a model is provided, it initializes this model as the Policy and Target Networks. If not, it instantiates new DQN Networks as the Policy and Target Networks. It also prepares an Experience Buffer to store the Agent's experiences.
+   
+2. **get_action(state, epsilon)**: Determines the agent's action at a given state, based on the current policy and the epsilon parameter which drives exploration vs. exploitation.
+
+3. **validation(val_env,device)**: Implements the agent's interaction in a given environment for validation, tracking the total loss incurred during the process.
+
+4. **train(train_env, val_env, num_episode, batch_size, epsilon, gamma, lr, device)**: Trains the agent over a number of episodes included in num_episode. The agent interacts with the environment, collecting experiences, and learning from them. The method employs the epsilon-greedy approach for action selection and uses Adam as the optimization algorithm for backpropagation.
+
+**c) Additional Insights**
+
+This file creates the agent learning model using Deep Q-Learning approach where, at every action, the Agent updates its policy towards reducing the difference between the expected and actual Q-values. The concept of having separate 'policy_net' and 'target_net' is a strategy used for stabilization in Deep Q-Learning. Also, the 'epsilon-greedy' action selection ensures a balance between exploration and exploitation.
+
+- - - - - - - - - - - - - - - - - 
+
+**Step 2: Integrate Your Analysis into the Running Summary**
+
+- - - - - - - - - - - - - - - - - - Running Summary for the Code - - - - - - - - - - - - - - - - - - 
+
+The newly reviewed Python file introduced the fundamental reinforcement learning element - the Agent. In addition to the Environment we located earlier, now we have the Agent, who instead of passively receiving State transitions and Rewards, actively chooses an Action in each state, learns from the outcomes - in line with reinforcement learning.
+
+The Agent uses Deep Q-Networks (observed by the imported DQN in the code, to be analyzed later) for learning. It incorporates an epsilon-greedy approach in the 'get_action' function to balance between exploration of new actions and exploitation of known information. This is essential for the Agent to not fall into the trap of choosing sub-optimal solutions.
+
+Additionally, while training, the agent uses separate Policy and Target networks with their weights synchronized at intervals. This is a real-world approach for stabilizing learning in Deep Q-Networks. The use of policy and target networks, along with Experience Replay (as observed through the use of the Experience_Buffer class), re-emphasizes that a variant of Deep Q-Learning is used for learning.
+
+In conclusion, this Python-based reinforcement learning trading system is now well-equipped with Data Preprocessing component, Environment to simulate and interact, and an Agent with a sophisticated learning mechanism designed to improve over time. Additional files would help us in dissecting the remaining pieces of the learning model including the actual structure of the DQN Network, reward function details, and evaluating the performance of the system over time.
+
+current file we are looking at is sample_repo/portfolio.py 
+
+**Step 1: Analyze the Current Code File**
+
+- - - - - - - - - - - - - - - - - - Specific Code Summary - - - - - - - - - - - - - - - - - -
+
+a) **Code File Overview**
+
+This Python file defines a Portfolio class that targets managing a portfolio of stocks using the reinforcement learning Agent and Environment introduced in previous pieces of code. Each stock in the portfolio has its own reinforcement learning Agent assigned to it. All Agents are trained independently and produce backtests. These backtests are then used to reallocate resources among all the stocks in the portfolio. The Portfolio class happens to retrain these agents periodically and shares a common experience buffer for this purpose.  
+
+b) **Function Documentation**
+
+The Portfolio class contains several essential methods:
+
+1. **__init__(stock_list)**: Initializes the class object with a list of stocks, equally allocates the initial cash for each stock, and establishes a list of Agents for them. It also prepares an Experience Buffer to store the experiences of all the agents and establishes backtests for analyzing the performance of each stock. 
+
+2. **initialize()**: Trains the agent on historical data of each stock and conducts some backtests. 
+
+3. **reallocate_cash()**: Based on the recent performance of each stock’s backtest (last three days), it reallocates the resources amongst them. 
+
+4. **retrain()**: Retrains all the agents, providing them with a shared batch of experience on which to learn from. 
+
+5. **run()**: Part of the investment cycle. Depending on the trade environment, every agent performs actions to buy or sell stocks. 
+
+6. **evaluate()**: Evaluates the performance of various metrics, including mean metrics, returns, and benchmark returns. 
+
+7. **show_result()**: Visualizes the result and relevant performance.
+
+c) **Additional Insights**
+
+This file adds an interesting dimension of managing multiple assets (stocks) by introducing a Portfolio class. It uses the existing Environment and Agent classes very effectively and orchestrates the trading in an intelligent manner where resources (money) are reallocated based on individual asset's performance and agents are retrained periodically for the optimal results. Regardless of this intelligent orchestration, all Agents are sharing a common buffer of experiences, which might be surprising as they are dealing with different stocks having different price dynamics.
+
+- - - - - - - - - - - - - - - - - - 
+
+**Step 2: Integrate Your Analysis into the Running Summary**
+
+- - - - - - - - - - - - - - - - - - Running Summary for the Code - - - - - - - - - - - - - - - - - - 
+
+The latest code piece inspected introduces 'Portfolio' class, expanding the scope of the Python-based reinforcement learning trading system we've been studying. Now instead of just a single asset, the system can manage a portfolio of assets (stocks). Each stock has its own Environment and an Agent that learns and makes decisions for that particular stock. The 'Portfolio' class also manages an Experience Buffer that all agents share to learn from. This is the first time we are seeing this sort of shared learning within our system. 
+
+Training of agents happens in two stages, first when initializing the portfolio where each agent learns from its stock's historical data and then during the investment cycle at regular intervals where learning happens from shared experiences.
+
+Another key aspect of this class is the reallocation of resources amongst stocks, based on the performance of their respective backtests. However, it seems the system measures performance based on the last three days of backtests only, which might not clearly indicate the real potential of the asset. 
+
+Being able to visualize the result and relevant performance metrics of a portfolio is also an important aspect in any trading system, which is well taken care of in the 'show_result' method of this class.
+
+Thus, now our Python-based reinforcement learning trading system could actually be a Portfolio Management System (PMS). While most parts of this system are now identified, further analysis could extract more details on how the DQN architecture is defined, more insights into the reward function utilized and the overall parameters configuration including trading costs. These areas are yet to be clarified to fully understand this system.
+current file we are looking at is sample_repo/main.py 
+
+**Step 1: Analyze the Current Code File**
+
+- - - - - - - - - - - - - - - - - - Specific Code Summary - - - - - - - - - - - - - - - - - -
+
+a) **Code File Overview**
+
+This code file appears to be the main driver of the project, combining all the previous classes and functions studied to execute the complete reinforcement learning trading program. In particular, this code reads a CSV data file, processes the data, instantiates the Environment and Agent classes, performs training, and carries out backtesting. The key component is the loop where the 'Portfolio' object is instantiated multiple times with different stocks, which are then trained, evaluated, and results are averaged over the several runs.
+
+b) **Function Documentation**
+
+As a main driver, most of the code segments aren't encapsulated in Python functions or classes; instead, they're a sequence of operations including data preparation, instantiation of classes and post-processing. However, The file does use three classes described in previous files:
+
+1. **Agent**: responsible for training models on provided Environment.
+2. **Environment**: contains stock data for which models have to be trained.
+3. **Portfolio**: utilizes the trained agents for trading and manages the portfolio of multiple stocks.
+
+c) **Additional Insights**
+
+This file's main loop where the portfolio object is repeatedly run shows that the system is designed to test random combinations of stocks. This introduces randomness in the selection of stocks yet maintains the robustness of the system by averaging over several runs. It is also worthy to note that the module uses the torch library for implementing the deep learning components and pandas for handling data. A significant part of the code seems to be for backtesting and calculating averages of multiple performance metrics over several runs.
+
+- - - - - - - - - - - - - - - - - - 
+
+**Step 2: Integrate Your Analysis into the Running Summary**
+
+- - - - - - - - - - - - - - - - - - Running Summary for the Code - - - - - - - - - - - - - - - - - - 
+
+The latest code file expands on our understanding of the Python-based Portfolio Management System (PMS) using reinforcement learning. This file essentially brings together all of the different components of the system that we've understood so far. It uses processed data to train reinforcement learning agents using the Agent and Environment class while simultaneously offering backtesting ability as well as metrics evaluation on a per stock basis. 
+
+The core operation seems to be the repeated cycle of selecting a different set of stocks, forming a Portfolio, training on historic data, run in trade simulation, and evaluating the portfolios' performances. This systematic randomness while testing and averaging over many runs add robustness to the system and better assesses the effectiveness of the overall model.
+
+However, the system doesn't seem to provide a way for the user to select specific stocks for the portfolio, instead picking them randomly. This might be intentional for assessing system performance but if this reinforcement learning trading system were to be used for real investment, there should be a mechanism for analysing user-selected stocks too. 
+
+The code furthermore shows deep personalization options for the user to adjust the agent’s action space, learning rate, batch size, and the number of episodes the agent will learn from. The system also seems to be cost-conscious, taking trading costs into account, which is fairly practical in real-world scenarios.
+
+With the understanding we now have, it is safe to say that we have covered the main functionalities of our reinforcement learning based PMS. The missing parts now include understanding data processing, and perhaps gaining an understanding of how the system manages possible overfitting given the huge amount of learning iteration it does for each stock in the Portfolio. A dive into how actions are selected and reward function calculations would also be useful as a next step.
+
+-----------------------------------This is the final README.md-------------------------------------
+### README.md
+
+1. **Project Title**
+   - Reinforcement Learning Based Portfolio Management System
+
+2. **Introduction or Summary**
+   - This repository contains a comprehensive Reinforcement Learning based Portfolio Management System (PMS). It's a complete solution for training and evaluating trading systems on historic stock data. It brings together different modules to read CSV data, instantiate environment & reinforcement learning agents, train them and carry out backtesting. While performing these operations, the system forms a portfolio of stocks, evaluates its performance, and averages the results over multiple runs.
+   - The PMS is designed to train on different stock combinations with a systematic randomness, enhancing the general effectiveness of the model. While its current design randomly selects stocks for testing, provisions can be made for allowing user-selected stocks depending on the real-world requirements.
+   - The PMS introduces a range of notable features including user customization options, such as adjusting the agent’s action space, learning rate, batch size, and learning episodes. It's designed to be cost-conscious, factoring in trading costs to mimic practical scenarios more accurately.
+   - The remaining aspects to explore within this repository are related to data processing, overfitting management, action selection, and reward function calculations.
+
+3. **Installation Instructions**
+   - N/A
+
+4. **Usage**
+   - N/A
+
+5. **Features**
+   - The key features of the PMS include:
+     - A complete, modular process comprising of data intake, processing, class instantiation, training, backtesting and metrics evaluation.
+     - Integration of the Agent, Environment and Portfolio classes for a robust implementation of reinforcement learning algorithms.
+     - A systematic randomization process for testing different combinations of stocks and enhancing the model's robustness by averaging over many runs.
+     - Deep user personalization options including the adjustment of the agent’s action space, learning rate, batch size, and learning episodes.
+     - A practical, cost-conscious design that takes trading costs into account.
+   - The remaining areas of interest within the repository include data processing, overfitting management, action selection, and reward function calculations.
+
+6. **Contributing**
+   - N/A
+
+7. **License**
+   - N/A
+
+8. **Contact Information**
+   - N/A
+
